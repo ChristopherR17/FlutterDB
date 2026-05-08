@@ -9,10 +9,7 @@ import '../widgets/loading_box.dart';
 class DetailScreen extends StatefulWidget {
   final int gameId;
 
-  const DetailScreen({
-    super.key,
-    required this.gameId,
-  });
+  const DetailScreen({super.key, required this.gameId});
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -35,6 +32,7 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Detalle')),
       body: FutureBuilder<Game>(
         future: _futureGame,
         builder: (context, snapshot) {
@@ -51,47 +49,33 @@ class _DetailScreenState extends State<DetailScreen> {
 
           final game = snapshot.data!;
 
-          return CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                expandedHeight: 260,
-                pinned: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  title: Text(game.name),
-                  background: Image.network(
-                    _apiService.imageUrl(game.image),
-                    fit: BoxFit.cover,
+          return ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.network(
+                  _apiService.imageUrl(game.image),
+                  height: 210,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => Container(
+                    height: 210,
+                    color: AppTheme.panelSoft,
+                    child: const Icon(Icons.videogame_asset_rounded, size: 52),
                   ),
                 ),
               ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.all(22),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Wrap(
-                        spacing: 10,
-                        runSpacing: 10,
-                        children: [
-                          _InfoChip(icon: Icons.category_rounded, text: game.category),
-                          _InfoChip(icon: Icons.calendar_month_rounded, text: '${game.year}'),
-                          _InfoChip(icon: Icons.sports_esports_rounded, text: game.platform),
-                          _InfoChip(icon: Icons.star_rounded, text: game.rating.toStringAsFixed(1)),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-                      Text('Desarrolladora', style: Theme.of(context).textTheme.titleMedium),
-                      const SizedBox(height: 8),
-                      Text(game.developer),
-                      const SizedBox(height: 24),
-                      Text('Descripción', style: Theme.of(context).textTheme.titleMedium),
-                      const SizedBox(height: 8),
-                      Text(game.description ?? 'Sin descripción disponible.'),
-                    ],
-                  ),
-                ),
-              ),
+              const SizedBox(height: 18),
+              Text(game.name, style: Theme.of(context).textTheme.headlineLarge),
+              const SizedBox(height: 8),
+              Text('${game.category} · ${game.platform} · ${game.year}'),
+              const SizedBox(height: 18),
+              _InfoRow(label: 'Desarrolladora', value: game.developer),
+              _InfoRow(label: 'Valoración', value: game.rating.toStringAsFixed(1)),
+              const SizedBox(height: 18),
+              Text('Descripción', style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: 8),
+              Text(game.description ?? 'Sin descripción disponible.'),
             ],
           );
         },
@@ -100,26 +84,23 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 }
 
-class _InfoChip extends StatelessWidget {
-  final IconData icon;
-  final String text;
+class _InfoRow extends StatelessWidget {
+  final String label;
+  final String value;
 
-  const _InfoChip({required this.icon, required this.text});
+  const _InfoRow({required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        color: AppTheme.panel,
-        borderRadius: BorderRadius.circular(18),
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 18, color: AppTheme.accent),
-          const SizedBox(width: 7),
-          Text(text),
+          SizedBox(
+            width: 120,
+            child: Text(label, style: const TextStyle(color: AppTheme.muted)),
+          ),
+          Expanded(child: Text(value)),
         ],
       ),
     );

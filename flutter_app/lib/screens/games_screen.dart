@@ -11,10 +11,7 @@ import 'detail_screen.dart';
 class GamesScreen extends StatefulWidget {
   final GameCategory category;
 
-  const GamesScreen({
-    super.key,
-    required this.category,
-  });
+  const GamesScreen({super.key, required this.category});
 
   @override
   State<GamesScreen> createState() => _GamesScreenState();
@@ -37,9 +34,7 @@ class _GamesScreenState extends State<GamesScreen> {
   void _openDetail(Game game) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (_) => DetailScreen(gameId: game.id),
-      ),
+      MaterialPageRoute(builder: (_) => DetailScreen(gameId: game.id)),
     );
   }
 
@@ -64,13 +59,10 @@ class _GamesScreenState extends State<GamesScreen> {
           final games = snapshot.data ?? [];
 
           return ListView(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(16),
             children: [
-              Text(
-                widget.category.description,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 20),
+              Text(widget.category.description),
+              const SizedBox(height: 16),
               for (final game in games)
                 GameCard(
                   game: game,

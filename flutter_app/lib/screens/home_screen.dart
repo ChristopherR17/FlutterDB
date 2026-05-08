@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../models/category_model.dart';
 import '../services/api_service.dart';
-import '../theme/app_theme.dart';
 import '../widgets/category_card.dart';
 import '../widgets/error_box.dart';
 import '../widgets/loading_box.dart';
@@ -40,9 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _openCategory(GameCategory category) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (_) => GamesScreen(category: category),
-      ),
+      MaterialPageRoute(builder: (_) => GamesScreen(category: category)),
     );
   }
 
@@ -75,63 +72,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
           final categories = snapshot.data ?? [];
 
-          return CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Retro Games DB',
-                        style: Theme.of(context).textTheme.headlineLarge,
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        'Explora videojuegos clásicos por género y consulta sus detalles desde un servidor NodeJS.',
-                      ),
-                      const SizedBox(height: 18),
-                      InkWell(
-                        borderRadius: BorderRadius.circular(20),
-                        onTap: _goToSearch,
-                        child: Container(
-                          padding: const EdgeInsets.all(18),
-                          decoration: BoxDecoration(
-                            color: AppTheme.panelSoft,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: const Row(
-                            children: [
-                              Icon(Icons.search_rounded, color: AppTheme.accent),
-                              SizedBox(width: 12),
-                              Expanded(child: Text('Buscar por nombre, consola, año o desarrolladora')),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+          return ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              Text('Retro Games DB', style: Theme.of(context).textTheme.headlineLarge),
+              const SizedBox(height: 6),
+              const Text('Elige una categoría o busca un videojuego clásico.'),
+              const SizedBox(height: 16),
+              OutlinedButton.icon(
+                onPressed: _goToSearch,
+                icon: const Icon(Icons.search_rounded),
+                label: const Text('Buscar videojuego'),
               ),
-              SliverPadding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-                sliver: SliverGrid.builder(
-                  itemCount: categories.length,
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 260,
-                    mainAxisSpacing: 14,
-                    crossAxisSpacing: 14,
-                    childAspectRatio: 1.05,
-                  ),
-                  itemBuilder: (context, index) {
-                    return CategoryCard(
-                      category: categories[index],
-                      onTap: () => _openCategory(categories[index]),
-                    );
-                  },
+              const SizedBox(height: 16),
+              for (final category in categories)
+                CategoryCard(
+                  category: category,
+                  onTap: () => _openCategory(category),
                 ),
-              ),
             ],
           );
         },

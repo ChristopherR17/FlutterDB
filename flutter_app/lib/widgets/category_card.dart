@@ -15,34 +15,20 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(22),
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: AppTheme.panel,
-          borderRadius: BorderRadius.circular(22),
-          border: Border.all(color: Colors.white.withOpacity(0.06)),
+    return Card(
+      margin: const EdgeInsets.only(bottom: 10),
+      color: AppTheme.panel,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: ListTile(
+        onTap: onTap,
+        leading: Text(category.icon, style: const TextStyle(fontSize: 28)),
+        title: Text(category.name, style: Theme.of(context).textTheme.titleMedium),
+        subtitle: Text(
+          category.description,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(category.icon, style: const TextStyle(fontSize: 34)),
-            const Spacer(),
-            Text(
-              category.name,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              category.description,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ],
-        ),
+        trailing: const Icon(Icons.chevron_right_rounded),
       ),
     );
   }

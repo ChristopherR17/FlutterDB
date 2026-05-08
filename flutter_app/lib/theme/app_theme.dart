@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const Color background = Color(0xFF10121A);
-  static const Color panel = Color(0xFF181B26);
-  static const Color panelSoft = Color(0xFF222638);
+  static const Color background = Color(0xFF111111);
+  static const Color panel = Color(0xFF1E1E1E);
+  static const Color panelSoft = Color(0xFF2A2A2A);
   static const Color accent = Color(0xFFFFC857);
-  static const Color accent2 = Color(0xFF6DECB9);
-  static const Color text = Color(0xFFF2F2F2);
-  static const Color muted = Color(0xFFB8BAC8);
+  static const Color text = Color(0xFFF4F4F4);
+  static const Color muted = Color(0xFFBDBDBD);
 
   static ThemeData get darkTheme {
     return ThemeData(
@@ -25,32 +24,25 @@ class AppTheme {
         elevation: 0,
         centerTitle: false,
       ),
-      cardTheme: CardThemeData(
-        color: panel,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: panel,
         hintStyle: const TextStyle(color: muted),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
       ),
       textTheme: const TextTheme(
         headlineLarge: TextStyle(
           color: text,
-          fontSize: 34,
-          fontWeight: FontWeight.w900,
+          fontSize: 28,
+          fontWeight: FontWeight.w800,
         ),
         titleLarge: TextStyle(
           color: text,
-          fontSize: 22,
-          fontWeight: FontWeight.w800,
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
         ),
         titleMedium: TextStyle(
           color: text,
@@ -60,7 +52,7 @@ class AppTheme {
         bodyMedium: TextStyle(
           color: muted,
           fontSize: 14,
-          height: 1.4,
+          height: 1.35,
         ),
       ),
     );
