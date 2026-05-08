@@ -1,0 +1,17 @@
+{
+  "name": "pixel-vault-api",
+  "version": "1.0.0",
+  "description": "Servidor NodeJS para una app Flutter de videojuegos retro",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "flutter",
+    "retro-games"
+  ],
+  "author": "",
+  "license": "ISC"
+}
